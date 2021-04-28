@@ -1,0 +1,43 @@
+name: stack_fin_notes
+description: Notes app.
+publish_to: "none"
+version: 1.0.0+1
+
+environment:
+  sdk: ">=2.7.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.2
+  get: 3.26.0
+  intl: 0.16.1
+  google_fonts: 1.1.2
+  scroll_app_bar: 1.0.3
+  image_picker: 0.6.7+22
+  hive: 1.4.4+1
+  hive_flutter: 0.3.1
+  path_provider:
+  just_debounce_it:
+  photo_view:
+  firebase_auth:
+  google_sign_in:
+  firebase_core:
+  flutter_svg:
+  cloud_firestore:
+  firebase_storage:
+  flutter_staggered_grid_view:
+  connectivity:
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  integration_test:
+    sdk: flutter
+
+flutter:
+  uses-material-design: true
+  assets:
+    - assets/
+    - assets/images/
+    - assets/svg/
