@@ -7,6 +7,7 @@ import '../../../app/data/services/firestore_service.dart';
 import '../../../app/utils/helper.dart';
 import '../../../app_controller.dart';
 
+/// Service for syncing local images to google cloud storage
 class SyncService extends GetxService {
   final AppController _appController = Get.find();
   final CloudStorageService _cloudStorageService = Get.find();

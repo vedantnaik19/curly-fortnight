@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../../../app/core/services/auth_service.dart';
 
+/// Page Middleware, its functions are called when the page associated with it is searched.
+/// Checks if user is logged in.
 class AuthGuard extends GetMiddleware {
   final priority;
 

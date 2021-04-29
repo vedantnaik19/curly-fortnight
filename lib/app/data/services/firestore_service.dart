@@ -5,6 +5,7 @@ import '../../../app/core/services/auth_service.dart';
 import '../../../app/data/models/db_user.dart';
 import '../../../app/data/models/note.dart';
 
+/// Service for to perform CRUD operations on cloud firestore database
 class FirestoreService extends GetxService {
   final AuthService _authService = Get.find();
 
@@ -26,6 +27,7 @@ class FirestoreService extends GetxService {
     super.onInit();
   }
 
+  /// Create or update user in database
   Future<void> syncUser(DbUser user) async {
     DocumentReference users = _firestore.collection(DbKeys.USERS).doc(user.id);
     await users.set(user.toJson(), SetOptions(merge: true));

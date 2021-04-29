@@ -4,6 +4,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
 import '../../../app/data/models/note.dart';
 
+/// Service for uploading and deleting images to google cloud storage
 class CloudStorageService extends GetxService {
   final _storage = FirebaseStorage.instance;
   FirebaseStorage get storage => _storage;

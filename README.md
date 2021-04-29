@@ -1,16 +1,23 @@
-# stack_fin_notes
+# Notes
 
-A new Flutter project.
+Basic notes app.
 
-## Getting Started
+## Installation
 
-This project is a starting point for a Flutter application.
+Go to project root and execute the following command in console to get the required dependencies:
 
-A few resources to get you started if this is your first Flutter project:
+```bash
+flutter pub get
+```
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+## Structure
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Every app screen has its own directory, which contains view(page/widget) file associated controller file and binding(used for putting dependencies) file.
+- The core directory consists of all the app level stuff which includes services, route guards, theme, etc.
+- Data directory consits of all the models and services for firestore db and cloud storage (read, write, update, delete) operations
+- Shared directory consists of the widgets and services(other than data services) which are shared across different screens
+- Utils folder consists of helper and validator classes
+
+## Library used
+
+- [GetX](https://pub.dev/packages/get) (For state, route and dependancy management)

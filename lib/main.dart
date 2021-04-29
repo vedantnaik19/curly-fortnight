@@ -10,7 +10,7 @@ Future<void> main() async {
   await init();
   runApp(
     GetMaterialApp(
-      title: 'Notes',
+      title: 'Stack Finance Notes',
       debugShowCheckedModeBanner: false,
       enableLog: true,
       locale: Locale('en', 'US'),

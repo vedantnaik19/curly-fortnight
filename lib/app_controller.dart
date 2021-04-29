@@ -7,6 +7,7 @@ import 'package:stack_fin_notes/app/data/services/firestore_service.dart';
 import './app/core/services/auth_service.dart';
 import './app/shared/widgets/widget_helper.dart';
 
+/// Used for application logic and acts as the coordinator between the View and the Model
 class AppController extends GetxController {
   final AuthService _authService = Get.find();
   final FirestoreService _firestoreService = Get.find();
