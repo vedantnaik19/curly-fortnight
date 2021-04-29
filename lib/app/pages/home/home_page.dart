@@ -3,6 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:get/get.dart';
 import 'package:scroll_app_bar/scroll_app_bar.dart';
+import 'package:visibility_detector/visibility_detector.dart';
+import '../../../app/core/constants/widget_keys.dart';
+import '../../../app/shared/widgets/user_avatar.dart';
 import '../../../app/data/models/note.dart';
 import '../../../app/pages/home/widgets/add_note_button.dart';
 import '../../../app/pages/home/widgets/home_drawer.dart';
@@ -24,7 +27,12 @@ class HomePage extends GetView<HomeController> {
       drawer: HomeDrawer(),
       floatingActionButton: AddNoteButton(),
       appBar: buildScrollAppBar(textTheme),
-      body: buildBody(),
+      body: VisibilityDetector(
+          key: WidgetKeys.VD_HOME_BODY,
+          onVisibilityChanged: (info) {
+            if (info.visibleFraction > 0.9) controller.syncImages();
+          },
+          child: buildBody()),
     );
   }
 
@@ -42,7 +50,7 @@ class HomePage extends GetView<HomeController> {
                 else if (snapshot.hasError)
                   return Center(child: Text(snapshot.error.toString()));
                 final List<DocumentSnapshot> documents = snapshot.data.docs;
-
+                controller.noteDocsSnap = documents;
                 if (documents.length == 0) {
                   return NoNotes();
                 }
@@ -93,21 +101,7 @@ class HomePage extends GetView<HomeController> {
                 onTap: () {
                   _scaffoldKey.currentState.openDrawer();
                 },
-                child: CircleAvatar(
-                  child: controller.photoURL != null
-                      ? ClipRRect(
-                          borderRadius: BorderRadius.circular(24),
-                          child: Image.network(
-                            controller.photoURL,
-                            fit: BoxFit.contain,
-                          ),
-                        )
-                      : Text(
-                          controller.displayName.substring(0, 1).capitalize,
-                          maxLines: 1,
-                        ),
-                  maxRadius: 14,
-                ),
+                child: UserAvatar(radius: 14),
               ),
               SizedBox(
                 width: 4,

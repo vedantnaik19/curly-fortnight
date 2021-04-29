@@ -15,7 +15,7 @@ class SyncService extends GetxService {
   bool _isUploadBusy = false;
 
   Future<void> syncImages(List<DocumentSnapshot> ds) async {
-    if (!_isUploadBusy && _appController.hasConnection) {
+    if (!_isUploadBusy && _appController.hasConnection.value) {
       _isUploadBusy = true;
       for (int i = 0; i < ds.length; i++) {
         var note = Note.fromJson(ds[i].data());

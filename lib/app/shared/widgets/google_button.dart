@@ -3,9 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import '../../../app/core/constants/asset_path.dart';
 import '../../../app/core/theme/app_colors.dart';
-import '../../../app_controller.dart';
 
-class GoogleButton extends GetView<AppController> {
+class GoogleButton extends StatelessWidget {
   final Function onTap;
 
   const GoogleButton({Key key, @required this.onTap});
@@ -14,7 +13,7 @@ class GoogleButton extends GetView<AppController> {
     final textTheme = Theme.of(context).textTheme;
     return RaisedButton(
       padding: const EdgeInsets.all(12),
-      elevation: 0.5,
+      elevation: 0.2,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
       onPressed: onTap,
       color: AppColors.offWhite,

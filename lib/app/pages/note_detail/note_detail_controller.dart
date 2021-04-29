@@ -72,7 +72,7 @@ class NoteDetailController extends GetxController {
             editedAt: DateTime.now().millisecondsSinceEpoch));
       }
     } catch (e) {
-      handleError(e, "Failed to select image.");
+      handleError(e);
     }
   }
 
@@ -119,8 +119,11 @@ class NoteDetailController extends GetxController {
 
   void handleError(e, [String message]) {
     GetUtils.printFunction("NoteDetailController: ", e, message);
-    if (e.toString().toLowerCase().contains('network'))
+    var erroString = e.toString().toLowerCase();
+    if (erroString.contains('network'))
       message = "Please check your internet connection and try again!";
-    _appController.showSnack(message ?? e);
+    else if (erroString.contains('photo_access_denied'))
+      message = "Please grant permission to access gallery";
+    _appController.showSnack(message ?? e.message ?? e.toString());
   }
 }

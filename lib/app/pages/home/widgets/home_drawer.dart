@@ -41,17 +41,21 @@ class HomeDrawer extends GetView<HomeController> {
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          controller.displayName,
-                          style: textTheme.bodyText1
-                              .copyWith(fontWeight: FontWeight.bold),
+                        child: Obx(
+                          () => Text(
+                            controller.dbUser.value?.name ?? "",
+                            style: textTheme.bodyText1
+                                .copyWith(fontWeight: FontWeight.bold),
+                          ),
                         ),
                       ),
                       Padding(
                         padding: const EdgeInsets.only(left: 4.0),
-                        child: Text(
-                          controller.email,
-                          style: textTheme.bodyText1,
+                        child: Obx(
+                          () => Text(
+                            controller.dbUser.value?.email ?? "",
+                            style: textTheme.bodyText1,
+                          ),
                         ),
                       ),
                     ],

@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
+import '../../../app/data/models/db_user.dart';
 import '../../../app/data/services/firestore_service.dart';
 import '../../../app/shared/services/sync_service.dart';
 import '../../../app_controller.dart';
@@ -9,34 +10,34 @@ class HomeController extends GetxController {
   final SyncService _syncService = Get.find();
   final FirestoreService _firestoreService = Get.find();
   final AppController _appController = Get.find();
+  StreamSubscription _connectivitySub;
 
+  List<DocumentSnapshot> noteDocsSnap = [];
   Stream get notesStream => _firestoreService.getNotes();
-  String get photoURL => _appController.photoURL;
-  String get displayName => _appController.displayName;
-  String get email => _appController.email;
+  Rx<DbUser> get dbUser => _appController.dbUser;
 
   @override
   void onReady() {
-    notesStream.listen((event) {
-      _syncImages(event.docs);
-    });
+    _appController.getDbUser();
+    _listenConnectivity();
     super.onReady();
   }
 
   @override
   void onClose() {
+    _connectivitySub?.cancel();
     super.onClose();
   }
 
-  void _syncImages(List<DocumentSnapshot> ds) {
+  Future<void> syncImages() async {
     try {
-      _syncService.syncImages(ds);
+      _syncService.syncImages(noteDocsSnap);
     } catch (e) {
       handleError(e, "Failed to sync images");
     }
   }
 
-  void onLogout() {
+  Future<void> onLogout() async {
     try {
       _appController.signOut();
     } catch (e) {
@@ -46,6 +47,12 @@ class HomeController extends GetxController {
 
   void handleError(e, [String message]) {
     GetUtils.printFunction("HomeController: ", e, message);
-    _appController.showSnack(message ?? e);
+    _appController.showSnack(message ?? e.message ?? e.toString());
+  }
+
+  void _listenConnectivity() {
+    _connectivitySub = _appController.hasConnection.listen((val) {
+      syncImages();
+    });
   }
 }

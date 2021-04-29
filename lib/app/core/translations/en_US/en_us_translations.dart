@@ -9,7 +9,7 @@ final Map<String, String> enUS = {
   "password": "Password",
   "login": "Log In",
   "signup": "Sign Up",
-  "forgotPassword": "Forgot password?",
+  "forgotPassword": "Reset password?",
   "or": "OR",
   "continueWGoogle": "Continue with Google",
   "registerHere": "Not a user? Sign up here",

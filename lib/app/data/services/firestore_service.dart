@@ -42,6 +42,11 @@ class FirestoreService extends GetxService {
     userDocRef.collection(DbKeys.NOTES).doc(note.id).delete();
   }
 
+  Future<DbUser> getDbUser() async {
+    var doc = await userDocRef.get();
+    return DbUser.fromJson(doc.data());
+  }
+
   Stream<QuerySnapshot> getNotes() {
     return notesRef.orderBy(DbKeys.CREATED_AT, descending: true).snapshots();
   }

@@ -22,8 +22,8 @@ class ImageWidget extends GetView<AppController> {
                   child: Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Text(
-                        controller.hasConnection
-                            ? "Failed to load image!"
+                        controller.hasConnection.value
+                            ? ""
                             : "Unable to load image, check internet connectivity!",
                         maxLines: 2,
                         textAlign: TextAlign.center,
@@ -50,6 +50,8 @@ class ImageWidget extends GetView<AppController> {
               );
             },
           )
-        : Image.file(File(uri));
+        : File(uri) != null
+            ? Image.file(File(uri))
+            : Container();
   }
 }

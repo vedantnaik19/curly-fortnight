@@ -8,20 +8,24 @@ class UserAvatar extends GetView<AppController> {
 
   @override
   Widget build(BuildContext context) {
-    return CircleAvatar(
-      child: controller.photoURL != null
-          ? ClipRRect(
-              borderRadius: BorderRadius.circular(24),
-              child: Image.network(
-                controller.photoURL,
-                fit: BoxFit.contain,
+    return Obx(
+      () => CircleAvatar(
+        child: controller.dbUser.value?.photoUrl != null
+            ? ClipRRect(
+                borderRadius: BorderRadius.circular(24),
+                child: Image.network(
+                  controller.dbUser.value.photoUrl,
+                  fit: BoxFit.contain,
+                ),
+              )
+            : Text(
+                (controller.dbUser.value?.name ?? "?")
+                    .substring(0, 1)
+                    .capitalize,
+                maxLines: 1,
               ),
-            )
-          : Text(
-              controller.displayName.substring(0, 1).capitalize,
-              maxLines: 1,
-            ),
-      maxRadius: radius,
+        maxRadius: radius,
+      ),
     );
   }
 }

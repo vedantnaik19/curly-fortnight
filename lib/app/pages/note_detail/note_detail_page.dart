@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:just_debounce_it/just_debounce_it.dart';
+import './widgets/decription_field.dart';
+import './widgets/title_field.dart';
 import '../../../app/core/theme/app_colors.dart';
 import '../../../app/pages/note_detail/widgets/bottom_row.dart';
 import '../../../app/pages/note_detail/widgets/gesture_image_view.dart';
@@ -24,23 +25,20 @@ class NoteDetailPage extends GetView<NoteDetailController> {
             },
           ),
         ),
-        body: Hero(
-          tag: controller.note.value.id,
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Obx(
-                  () => AnimatedSwitcher(
-                      duration: Duration(milliseconds: 300),
-                      child: !(["", null].contains(controller.note.value.image))
-                          ? buildListView(textTheme)
-                          : buildColumnView(textTheme)),
-                ),
+        body: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Obx(
+                () => AnimatedSwitcher(
+                    duration: Duration(milliseconds: 300),
+                    child: !(["", null].contains(controller.note.value.image))
+                        ? buildListView(textTheme)
+                        : buildColumnView(textTheme)),
               ),
-              BottomRow()
-            ],
-          ),
+            ),
+            BottomRow()
+          ],
         ),
       ),
     );
@@ -77,33 +75,8 @@ class NoteDetailPage extends GetView<NoteDetailController> {
           padding: const EdgeInsets.symmetric(horizontal: 24),
           child: Column(
             children: [
-              TextField(
-                controller: controller.titleController,
-                style: textTheme.headline6,
-                textCapitalization: TextCapitalization.sentences,
-                maxLines: 1,
-                onChanged: (val) {
-                  Debounce.milliseconds(400, controller.setTitle, [val.trim()]);
-                },
-                decoration: InputDecoration(
-                  hintText: 'title'.tr,
-                  hintStyle: textTheme.headline6
-                      .copyWith(color: textTheme.caption.color),
-                ),
-              ),
-              TextField(
-                controller: controller.desController,
-                style: textTheme.bodyText1,
-                textCapitalization: TextCapitalization.sentences,
-                maxLines: 4,
-                decoration: InputDecoration(
-                  hintText: 'description'.tr,
-                ),
-                onChanged: (val) {
-                  Debounce.milliseconds(
-                      400, controller.setDescription, [val.trim()]);
-                },
-              ),
+              TitleField(),
+              DescriptionField(maxLines: 4),
             ],
           ),
         ),
@@ -116,35 +89,10 @@ class NoteDetailPage extends GetView<NoteDetailController> {
       padding: const EdgeInsets.symmetric(horizontal: 24),
       child: Column(
         children: [
-          TextField(
-            controller: controller.titleController,
-            style: textTheme.headline6,
-            textCapitalization: TextCapitalization.sentences,
-            maxLines: 1,
-            onChanged: (val) {
-              Debounce.milliseconds(400, controller.setTitle, [val.trim()]);
-            },
-            decoration: InputDecoration(
-              hintText: 'title'.tr,
-              hintStyle:
-                  textTheme.headline6.copyWith(color: textTheme.caption.color),
-            ),
-          ),
+          TitleField(),
           Expanded(
-              child: TextField(
-            controller: controller.desController,
-            style: textTheme.bodyText1,
-            textCapitalization: TextCapitalization.sentences,
-            maxLines: 10,
-            autofocus: Get.arguments == null ? true : false,
-            decoration: InputDecoration(
-              hintText: 'description'.tr,
-            ),
-            onChanged: (val) {
-              Debounce.milliseconds(
-                  400, controller.setDescription, [val.trim()]);
-            },
-          )),
+            child: DescriptionField(maxLines: 10),
+          ),
         ],
       ),
     );

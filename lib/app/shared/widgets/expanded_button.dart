@@ -21,7 +21,7 @@ class ExpandedButton extends StatelessWidget {
           label,
           style: textTheme.subtitle1.copyWith(color: Colors.white),
         ),
-        color: AppColors.purple.withOpacity(0.8),
+        color: AppColors.purple,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.all(16),
       ),

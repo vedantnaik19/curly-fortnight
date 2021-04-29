@@ -9,46 +9,43 @@ class NoteItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return Hero(
-      tag: note.id,
-      child: Card(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            !(["", null].contains(note.image))
-                ? ClipRRect(
-                    borderRadius: BorderRadius.only(
-                      topRight: Radius.circular(8),
-                      topLeft: Radius.circular(8),
-                    ),
-                    child: ImageWidget(uri: note.image))
-                : Container(),
-            Padding(
-              padding: const EdgeInsets.all(12),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  !(["", null].contains(note.title))
-                      ? Text(note.title,
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                          style: textTheme.headline6)
-                      : Container(),
-                  SizedBox(
-                    height: 4,
+    return Card(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          !(["", null].contains(note.image))
+              ? ClipRRect(
+                  borderRadius: BorderRadius.only(
+                    topRight: Radius.circular(8),
+                    topLeft: Radius.circular(8),
                   ),
-                  !(["", null].contains(note.description))
-                      ? Text(
-                          note.description,
-                          maxLines: 3,
-                          overflow: TextOverflow.ellipsis,
-                        )
-                      : Container()
-                ],
-              ),
+                  child: ImageWidget(uri: note.image))
+              : Container(),
+          Padding(
+            padding: const EdgeInsets.all(12),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                !(["", null].contains(note.title))
+                    ? Text(note.title,
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                        style: textTheme.headline6)
+                    : Container(),
+                SizedBox(
+                  height: 4,
+                ),
+                !(["", null].contains(note.description))
+                    ? Text(
+                        note.description,
+                        maxLines: 3,
+                        overflow: TextOverflow.ellipsis,
+                      )
+                    : Container()
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

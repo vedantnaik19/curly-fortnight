@@ -28,31 +28,30 @@ class LoginController extends GetxController {
       }
       _appController.showLoader(false);
     } catch (e) {
-      handleError(e, "Failed to login with Google.");
+      handleError(e);
     }
   }
 
   signupWEmailPassword(email, password, name) async {
     try {
-      _appController.showSnack("e.toString()");
       _appController.showLoader(true);
       UserCredential userCredential = await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: email, password: password);
       await syncUser(userCredential.user, name);
     } catch (e) {
-      handleError(e, "Failed to signup.");
+      handleError(e);
     }
   }
 
   void loginWEmailPassword(email, password) async {
     try {
       _appController.showLoader(true);
-      UserCredential userCredential = await _authService.firebaseAuth
+      await _authService.firebaseAuth
           .signInWithEmailAndPassword(email: email, password: password);
-      await syncUser(userCredential.user);
       _appController.showLoader(false);
+      Get.offAllNamed('/home');
     } catch (e) {
-      handleError(e, "Failed to login.");
+      handleError(e);
     }
   }
 
@@ -65,7 +64,7 @@ class LoginController extends GetxController {
       await Future.delayed(Duration(seconds: 4));
       Get.until((route) => Get.currentRoute == '/login');
     } catch (e) {
-      handleError(e, "Failed to send password reset link");
+      handleError(e);
     }
   }
 
@@ -89,6 +88,6 @@ class LoginController extends GetxController {
     _appController.showLoader(false);
     if (e.toString().toLowerCase().contains('network'))
       message = "Please check your internet connection and try again!";
-    _appController.showSnack(message ?? e);
+    _appController.showSnack(message ?? e.message ?? e.toString());
   }
 }

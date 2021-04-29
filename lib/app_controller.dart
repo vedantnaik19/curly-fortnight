@@ -2,21 +2,23 @@ import 'dart:async';
 import 'package:connectivity/connectivity.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:stack_fin_notes/app/data/models/db_user.dart';
+import 'package:stack_fin_notes/app/data/services/firestore_service.dart';
 import './app/core/services/auth_service.dart';
 import './app/shared/widgets/widget_helper.dart';
 
 class AppController extends GetxController {
   final AuthService _authService = Get.find();
+  final FirestoreService _firestoreService = Get.find();
 
-  bool _hasConnection = false;
+  var _hasConnection = false.obs;
   StreamSubscription _connectivitySub;
   StreamSubscription<User> _userAuthSub;
+  Rx<DbUser> _dbUser = Rx<DbUser>();
 
-  bool get hasConnection => _hasConnection;
+  RxBool get hasConnection => _hasConnection;
   User get currentUser => _authService.currentUser;
-  String get photoURL => currentUser.photoURL;
-  String get displayName => currentUser.displayName ?? "?";
-  String get email => currentUser.email ?? "?";
+  Rx<DbUser> get dbUser => _dbUser;
 
   @override
   void onReady() {
@@ -45,9 +47,9 @@ class AppController extends GetxController {
         .onConnectivityChanged
         .listen((ConnectivityResult result) async {
       if (result != ConnectivityResult.none) {
-        _hasConnection = true;
+        _hasConnection(true);
       } else {
-        _hasConnection = false;
+        _hasConnection(false);
         showSnack("youOffline".tr);
       }
     });
@@ -66,5 +68,21 @@ class AppController extends GetxController {
   Future<void> signOut() async {
     await _authService.signOut();
     // clear storage
+  }
+
+  Future<void> getDbUser() async {
+    try {
+      _dbUser(await _firestoreService.getDbUser());
+    } catch (e) {
+      handleError(e);
+    }
+  }
+
+  void handleError(e, [String message]) {
+    GetUtils.printFunction("AppController: ", e, message);
+    showLoader(false);
+    if (e.toString().toLowerCase().contains('network'))
+      message = "Please check your internet connection and try again!";
+    showSnack(message ?? e.message ?? e.toString());
   }
 }
