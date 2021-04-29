@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/core/theme/app_colors.dart';
-import 'package:stack_fin_notes/app/shared/utils/validators.dart';
+import '../../../app/core/theme/app_colors.dart';
+import '../../../app/utils/validators.dart';
+import '../../../app_controller.dart';
 
-class PasswordField extends GetView {
+class PasswordField extends GetView<AppController> {
   final TextEditingController textEditingController;
 
   const PasswordField({Key key, @required this.textEditingController})

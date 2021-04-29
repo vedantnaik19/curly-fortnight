@@ -1,22 +1,25 @@
-// ignore_for_file: invalid_use_of_protected_member
-
+import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/core/services/auth_service.dart';
-import 'package:stack_fin_notes/app/core/services/ui_service.dart';
-import 'package:stack_fin_notes/app/data/services/firestore_service.dart';
-import 'package:stack_fin_notes/app/shared/services/sync_Image_service.dart';
+import '../../../app/data/services/firestore_service.dart';
+import '../../../app/shared/services/sync_service.dart';
+import '../../../app_controller.dart';
 
-/// Controller
 class HomeController extends GetxController {
-  final UiService _uiService = Get.find();
+  final SyncService _syncService = Get.find();
   final FirestoreService _firestoreService = Get.find();
-  final SyncImageService _notesService = Get.find();
-  final AuthService _authService = Get.find();
-  FirestoreService get firestoreService => _firestoreService;
+  final AppController _appController = Get.find();
+
+  Stream get notesStream => _firestoreService.getNotes();
+  String get photoURL => _appController.photoURL;
+  String get displayName => _appController.displayName;
+  String get email => _appController.email;
 
   @override
   void onReady() {
+    notesStream.listen((event) {
+      _syncImages(event.docs);
+    });
     super.onReady();
   }
 
@@ -25,15 +28,24 @@ class HomeController extends GetxController {
     super.onClose();
   }
 
-  String get photoURL => _authService.currentUser.photoURL;
-  String get displayName => _authService.currentUser.displayName ?? "?";
-  String get email => _authService.currentUser.email ?? "?";
-
-  void syncImages(List<DocumentSnapshot> ds) {
-    _notesService.syncImages(ds);
+  void _syncImages(List<DocumentSnapshot> ds) {
+    try {
+      _syncService.syncImages(ds);
+    } catch (e) {
+      handleError(e, "Failed to sync images");
+    }
   }
 
   void onLogout() {
-    _authService.signOut();
+    try {
+      _appController.signOut();
+    } catch (e) {
+      handleError(e);
+    }
+  }
+
+  void handleError(e, [String message]) {
+    GetUtils.printFunction("HomeController: ", e, message);
+    _appController.showSnack(message ?? e);
   }
 }

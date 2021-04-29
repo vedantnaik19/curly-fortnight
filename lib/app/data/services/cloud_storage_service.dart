@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/data/models/note.dart';
+import '../../../app/data/models/note.dart';
 
 class CloudStorageService extends GetxService {
   final _storage = FirebaseStorage.instance;
@@ -20,7 +20,7 @@ class CloudStorageService extends GetxService {
     }
   }
 
-  deleteImage(Note note) async {
+  Future<void> deleteImage(Note note) async {
     if (Uri.parse(note.image).isAbsolute)
       await storage.ref().child("images/${note.id}/image_${note.id}").delete();
   }

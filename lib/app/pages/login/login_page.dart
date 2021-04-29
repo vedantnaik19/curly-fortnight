@@ -1,20 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/framework.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/core/constants/asset_path.dart';
-import 'package:stack_fin_notes/app/core/theme/app_colors.dart';
-import 'package:stack_fin_notes/app/pages/login/login_controller.dart';
-import 'package:stack_fin_notes/app/shared/widgets/email_field.dart';
-import 'package:stack_fin_notes/app/shared/widgets/expanded_button.dart';
-import 'package:stack_fin_notes/app/shared/widgets/google_button.dart';
-import 'package:stack_fin_notes/app/shared/widgets/logo.dart';
-import 'package:stack_fin_notes/app/shared/widgets/password_field.dart';
+import '../../../app/pages/login/login_controller.dart';
+import '../../../app/shared/widgets/email_field.dart';
+import '../../../app/shared/widgets/expanded_button.dart';
+import '../../../app/shared/widgets/google_button.dart';
+import '../../../app/shared/widgets/logo.dart';
+import '../../../app/shared/widgets/password_field.dart';
 
 class LoginPage extends GetView<LoginController> {
   final _formKey = GlobalKey<FormState>();
   final _emailController = TextEditingController();
   final _passController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;

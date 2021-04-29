@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Fixed sized loader to indicate progress
 class Loader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {

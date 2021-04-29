@@ -1,8 +1,7 @@
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/pages/login/login_binding.dart';
-import 'package:stack_fin_notes/app/pages/login/related/fogot_pass_page.dart';
-import 'package:stack_fin_notes/app/pages/login/related/signup_page.dart';
-
+import 'app/pages/login/login_binding.dart';
+import 'app/pages/login/related/fogot_pass_page.dart';
+import 'app/pages/login/related/signup_page.dart';
 import 'app/core/guards/auth_guard.dart';
 import 'app/pages/home/home_binding.dart';
 import 'app/pages/home/home_page.dart';

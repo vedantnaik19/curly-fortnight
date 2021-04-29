@@ -1,12 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/core/constants/db_keys.dart';
-import 'package:stack_fin_notes/app/core/services/auth_service.dart';
-import 'package:stack_fin_notes/app/data/models/note.dart';
+import '../../../app/core/constants/db_keys.dart';
+import '../../../app/core/services/auth_service.dart';
+import '../../../app/data/models/db_user.dart';
+import '../../../app/data/models/note.dart';
 
 class FirestoreService extends GetxService {
   final AuthService _authService = Get.find();
+
   FirebaseFirestore _firestore;
 
   FirebaseFirestore get firestore => _firestore;
@@ -25,11 +26,9 @@ class FirestoreService extends GetxService {
     super.onInit();
   }
 
-  Future<void> syncUser(User user, [String name]) async {
-    DocumentReference users = _firestore.collection(DbKeys.USERS).doc(user.uid);
-    return await users.set(
-        {DbKeys.NAME: name ?? user.displayName ?? "", DbKeys.EMAIL: user.email},
-        SetOptions(merge: true));
+  Future<void> syncUser(DbUser user) async {
+    DocumentReference users = _firestore.collection(DbKeys.USERS).doc(user.id);
+    await users.set(user.toJson(), SetOptions(merge: true));
   }
 
   void saveNote(Note note) {

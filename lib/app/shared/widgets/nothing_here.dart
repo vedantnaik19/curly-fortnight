@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:stack_fin_notes/app/core/constants/asset_path.dart';
+import '../../../app/core/constants/asset_path.dart';
 
 class NothingHere extends StatelessWidget {
   final double size;

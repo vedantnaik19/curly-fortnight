@@ -6,6 +6,5 @@ class NoteDetailBinding extends Bindings {
   @override
   void dependencies() {
     Get.put(NoteDetailController());
-    // Get.lazyPut<DetailsController>(() => DetailsController());
   }
 }

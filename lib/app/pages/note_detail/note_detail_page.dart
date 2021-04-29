@@ -1,13 +1,10 @@
-// ignore_for_file: invalid_use_of_protected_member
-
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:just_debounce_it/just_debounce_it.dart';
-import 'package:stack_fin_notes/app/core/theme/app_colors.dart';
-import 'package:stack_fin_notes/app/shared/utils/helper.dart';
-import 'package:stack_fin_notes/app/shared/widgets/image_widget.dart';
+import '../../../app/core/theme/app_colors.dart';
+import '../../../app/pages/note_detail/widgets/bottom_row.dart';
+import '../../../app/pages/note_detail/widgets/gesture_image_view.dart';
+import '../../../app/shared/widgets/image_widget.dart';
 import 'note_detail_controller.dart';
 
 class NoteDetailPage extends GetView<NoteDetailController> {
@@ -41,33 +38,7 @@ class NoteDetailPage extends GetView<NoteDetailController> {
                           : buildColumnView(textTheme)),
                 ),
               ),
-              Row(
-                children: [
-                  IconButton(
-                      icon: Icon(Icons.add_photo_alternate),
-                      onPressed: () {
-                        FocusScope.of(context).unfocus();
-                        controller.pickImage();
-                      }),
-                  Expanded(
-                      child: Obx(
-                    () => Text(
-                      controller.note.value.editedAt != null
-                          ? "editedAt".tr +
-                              " " +
-                              Helper.formatDate(controller.note.value.editedAt)
-                          : "",
-                      textAlign: TextAlign.center,
-                      style: textTheme.caption,
-                    ),
-                  )),
-                  IconButton(
-                      icon: Icon(Icons.delete_rounded),
-                      onPressed: () {
-                        controller.onDeleteNote();
-                      })
-                ],
-              )
+              BottomRow()
             ],
           ),
         ),
@@ -92,7 +63,13 @@ class NoteDetailPage extends GetView<NoteDetailController> {
                 )),
           ),
         ),
-        ImageWidget(uri: controller.note.value.image),
+        InkWell(
+            onTap: () {
+              Get.to(
+                () => GestureImageView(imagePath: controller.note.value.image),
+              );
+            },
+            child: ImageWidget(uri: controller.note.value.image)),
         SizedBox(
           height: 12,
         ),

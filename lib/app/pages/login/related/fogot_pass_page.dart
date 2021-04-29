@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/pages/login/login_controller.dart';
-import 'package:stack_fin_notes/app/shared/widgets/email_field.dart';
-import 'package:stack_fin_notes/app/shared/widgets/expanded_button.dart';
-import 'package:stack_fin_notes/app/shared/widgets/logo.dart';
+import '../../../../app/pages/login/login_controller.dart';
+import '../../../../app/shared/widgets/email_field.dart';
+import '../../../../app/shared/widgets/expanded_button.dart';
+import '../../../../app/shared/widgets/logo.dart';
 
 class ForgotPassPage extends GetView<LoginController> {
   final _emailCont = TextEditingController();
@@ -40,13 +40,14 @@ class ForgotPassPage extends GetView<LoginController> {
                   height: 16,
                 ),
                 ExpandedButton(
-                    label: "passReset".tr,
-                    onTap: () {
-                      FocusScope.of(context).unfocus();
-                      if (_formKey.currentState.validate()) {
-                        controller.forgotPassword(_emailCont.text);
-                      }
-                    }),
+                  label: "passReset".tr,
+                  onTap: () {
+                    FocusScope.of(context).unfocus();
+                    if (_formKey.currentState.validate()) {
+                      controller.forgotPassword(_emailCont.text);
+                    }
+                  },
+                ),
               ],
             ),
           ),

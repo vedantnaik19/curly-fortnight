@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/core/services/auth_service.dart';
+import '../../../app/core/services/auth_service.dart';
 
 class AuthGuard extends GetMiddleware {
   final priority;

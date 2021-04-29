@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/pages/login/login_controller.dart';
-import 'package:stack_fin_notes/app/shared/widgets/email_field.dart';
-import 'package:stack_fin_notes/app/shared/widgets/expanded_button.dart';
-import 'package:stack_fin_notes/app/shared/widgets/logo.dart';
-import 'package:stack_fin_notes/app/shared/widgets/name_field.dart';
-import 'package:stack_fin_notes/app/shared/widgets/password_field.dart';
+import '../../../../app/pages/login/login_controller.dart';
+import '../../../../app/shared/widgets/email_field.dart';
+import '../../../../app/shared/widgets/expanded_button.dart';
+import '../../../../app/shared/widgets/logo.dart';
+import '../../../../app/shared/widgets/name_field.dart';
+import '../../../../app/shared/widgets/password_field.dart';
 
 class SignUpPage extends GetView<LoginController> {
   final _formKey = GlobalKey<FormState>();

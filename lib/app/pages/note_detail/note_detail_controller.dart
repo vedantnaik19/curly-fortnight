@@ -9,12 +9,13 @@ import 'package:path_provider/path_provider.dart';
 import 'package:stack_fin_notes/app/data/models/note.dart';
 import 'package:stack_fin_notes/app/data/services/cloud_storage_service.dart';
 import 'package:stack_fin_notes/app/data/services/firestore_service.dart';
-import 'package:stack_fin_notes/app/shared/services/sync_Image_service.dart';
-import 'package:stack_fin_notes/app/shared/utils/helper.dart';
 import 'package:path/path.dart' as p;
+import 'package:stack_fin_notes/app/utils/helper.dart';
+import 'package:stack_fin_notes/app_controller.dart';
 
 /// Controller
 class NoteDetailController extends GetxController {
+  final AppController _appController = Get.find();
   final FirestoreService _firestoreService = Get.find();
   final CloudStorageService _cloudStorageService = Get.find();
   final _titleController = TextEditingController();
@@ -57,17 +58,21 @@ class NoteDetailController extends GetxController {
   }
 
   Future pickImage() async {
-    final pickedFile = await ImagePicker()
-        .getImage(source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1080);
-    if (pickedFile != null) {
-      var file = File(pickedFile.path);
-      final ext = p.extension(pickedFile.path);
-      final name = p.basenameWithoutExtension(pickedFile.path);
-      final appDir = await getApplicationDocumentsDirectory();
-      final File newImage = await file.copy('${appDir.path}/$name$ext');
-      _note(_note.value.copyWith(
-          image: newImage.path,
-          editedAt: DateTime.now().millisecondsSinceEpoch));
+    try {
+      final pickedFile = await ImagePicker().getImage(
+          source: ImageSource.gallery, maxHeight: 1080, maxWidth: 1080);
+      if (pickedFile != null) {
+        var file = File(pickedFile.path);
+        final ext = p.extension(pickedFile.path);
+        final appDir = await getApplicationDocumentsDirectory();
+        final File newImage =
+            await file.copy('${appDir.path}/image_${note.value.id}$ext');
+        _note(_note.value.copyWith(
+            image: newImage.path,
+            editedAt: DateTime.now().millisecondsSinceEpoch));
+      }
+    } catch (e) {
+      handleError(e, "Failed to select image.");
     }
   }
 
@@ -77,14 +82,18 @@ class NoteDetailController extends GetxController {
   }
 
   onRemoveImage() {
-    var imagePath = _note.value.image;
-    if (!["", null].contains(imagePath)) {
-      if (Uri.parse(imagePath).isAbsolute)
-        _cloudStorageService.deleteImage(_note.value);
-      else
-        File(imagePath).delete();
+    try {
+      var imagePath = _note.value.image;
+      if (!["", null].contains(imagePath)) {
+        if (Uri.parse(imagePath).isAbsolute)
+          _cloudStorageService.deleteImage(_note.value);
+        else
+          File(imagePath).delete();
+      }
+      _note(_note.value.copyWith(image: ""));
+    } catch (e) {
+      handleError(e, "Failed to remove image.");
     }
-    _note(_note.value.copyWith(image: ""));
   }
 
   setTitle(String title) {
@@ -100,7 +109,18 @@ class NoteDetailController extends GetxController {
   }
 
   void deleteNote(Note note) {
-    _firestoreService.deleteNote(note);
-    _cloudStorageService.deleteImage(note);
+    try {
+      _firestoreService.deleteNote(note);
+      _cloudStorageService.deleteImage(note);
+    } catch (e) {
+      handleError(e, "Failed to delete note.");
+    }
+  }
+
+  void handleError(e, [String message]) {
+    GetUtils.printFunction("NoteDetailController: ", e, message);
+    if (e.toString().toLowerCase().contains('network'))
+      message = "Please check your internet connection and try again!";
+    _appController.showSnack(message ?? e);
   }
 }

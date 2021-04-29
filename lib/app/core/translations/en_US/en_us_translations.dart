@@ -21,4 +21,6 @@ final Map<String, String> enUS = {
   "passResetLink": "A password reset link has been sent to your email address.",
   "passReset": "Reset password",
   "searchNotes": "Search your notes",
+  "youOffline": "You are offline!",
+  "logOut": "Log out",
 };

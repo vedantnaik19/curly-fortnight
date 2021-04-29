@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/shared/widgets/loader.dart';
 
-/// Service to display snackbars, loaders, bottomsheet, etc.
-class UiService extends GetxService {
-  showSnack(String message) {
+import 'loader.dart';
+
+class WidgetHelper {
+  static showSnack(String message) {
     Get.snackbar(
       null,
       null,
@@ -21,7 +21,7 @@ class UiService extends GetxService {
     );
   }
 
-  showLoader(bool val, [String msg = '']) {
+  static showLoader(bool val, [String msg = '']) {
     if (Get.isDialogOpen && !val) {
       Get.back();
     } else if (val) {
@@ -42,7 +42,10 @@ class UiService extends GetxService {
                       SizedBox(
                         height: 8,
                       ),
-                      Loader()
+                      Loader(),
+                      SizedBox(
+                        height: 64,
+                      )
                     ],
                   ),
                 ],

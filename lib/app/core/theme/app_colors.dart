@@ -7,7 +7,7 @@ class AppColors {
   static Color red = Color(0xFFE11900);
   static Color brown = Color(0xFF99644C);
   static Color orange = Color(0xFFFF6937);
-  static Color purple = Color(0xFF7356BF);
+  static Color purple = Color(0xFF2f2e41);
   static Color blue = Color(0xFF276EF1);
   static Color offWhite = Color(0xFFF1f1f1);
 }

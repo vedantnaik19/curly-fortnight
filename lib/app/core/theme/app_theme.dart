@@ -3,7 +3,7 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:stack_fin_notes/app/core/theme/app_colors.dart';
+import 'app_colors.dart';
 
 class AppTheme {
   static ThemeData getTheme() {
@@ -15,8 +15,8 @@ class AppTheme {
       statusBarBrightness: Brightness.dark,
     ));
     return ThemeData(
-        primaryColor: Colors.black,
-        accentColor: Colors.black,
+        primaryColor: AppColors.purple,
+        accentColor: AppColors.purple,
         textTheme: GoogleFonts.latoTextTheme(base.textTheme).copyWith(
           headline6:
               GoogleFonts.montserrat().copyWith(fontWeight: FontWeight.w500),
@@ -37,6 +37,7 @@ class AppTheme {
           border: InputBorder.none,
         ),
         buttonTheme: base.buttonTheme.copyWith(colorScheme: ColorScheme.dark()),
-        textSelectionTheme: TextSelectionThemeData(cursorColor: Colors.black));
+        textSelectionTheme:
+            TextSelectionThemeData(cursorColor: AppColors.purple));
   }
 }

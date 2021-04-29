@@ -1,8 +1,7 @@
 import 'dart:math';
 
 import 'package:intl/intl.dart';
-
-import '../../../app/data/models/note.dart';
+import '../../app/data/models/note.dart';
 
 class Helper {
   static int randomNumber() {
@@ -34,5 +33,9 @@ class Helper {
     if (!["", null].contains(note.image) && !Uri.parse(note.image).isAbsolute)
       return true;
     return false;
+  }
+
+  static bool isUrl(String str) {
+    return Uri.parse(str).isAbsolute;
   }
 }

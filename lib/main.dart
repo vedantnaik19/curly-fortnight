@@ -1,15 +1,13 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:stack_fin_notes/app_binding.dart';
 import 'package:stack_fin_notes/app_routes.dart';
 import 'app/core/translations/app_translations.dart';
 import 'app/core/theme/app_theme.dart';
-import 'app_controller.dart';
 
 Future<void> main() async {
-  final AppController appController = Get.put(AppController());
-  await appController.init();
+  await init();
   runApp(
     GetMaterialApp(
       title: 'Notes',
@@ -23,4 +21,9 @@ Future<void> main() async {
       initialBinding: AppBinding(),
     ),
   );
+}
+
+Future<void> init() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 }

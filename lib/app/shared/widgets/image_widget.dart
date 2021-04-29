@@ -1,32 +1,34 @@
 import 'dart:io';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/core/services/connectivity_service.dart';
+import '../../../app_controller.dart';
 
-class ImageWidget extends StatelessWidget {
+class ImageWidget extends GetView<AppController> {
   final String uri;
-  final ConnectivityService _connectivityService = Get.find();
-
   ImageWidget({Key key, @required this.uri}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
     return Uri.parse(uri).isAbsolute
-        ? Image.network(
-            uri,
+        ? Image(
+            image: CachedNetworkImageProvider(uri),
             errorBuilder: (BuildContext context, Object exception,
                 StackTrace stackTrace) {
               return Container(
                 width: double.maxFinite,
                 height: 100,
                 child: Center(
-                  child: Text(
-                      _connectivityService.hasConnection
-                          ? "Failed to load image!"
-                          : "Unable to load image, check internet connectivity!",
-                      maxLines: 2,
-                      style: textTheme.caption),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                        controller.hasConnection
+                            ? "Failed to load image!"
+                            : "Unable to load image, check internet connectivity!",
+                        maxLines: 2,
+                        textAlign: TextAlign.center,
+                        style: textTheme.caption),
+                  ),
                 ),
               );
             },

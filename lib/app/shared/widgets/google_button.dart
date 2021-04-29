@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:stack_fin_notes/app/core/constants/asset_path.dart';
-import 'package:stack_fin_notes/app/core/theme/app_colors.dart';
+import '../../../app/core/constants/asset_path.dart';
+import '../../../app/core/theme/app_colors.dart';
+import '../../../app_controller.dart';
 
-class GoogleButton extends GetView {
+class GoogleButton extends GetView<AppController> {
   final Function onTap;
 
   const GoogleButton({Key key, @required this.onTap});

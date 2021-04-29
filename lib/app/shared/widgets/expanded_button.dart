@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../app/core/theme/app_colors.dart';
 
 class ExpandedButton extends StatelessWidget {
   final label;
@@ -20,7 +21,7 @@ class ExpandedButton extends StatelessWidget {
           label,
           style: textTheme.subtitle1.copyWith(color: Colors.white),
         ),
-        color: Colors.black87,
+        color: AppColors.purple.withOpacity(0.8),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
         padding: const EdgeInsets.all(16),
       ),
