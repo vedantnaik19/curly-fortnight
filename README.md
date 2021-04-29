@@ -20,4 +20,4 @@ flutter pub get
 
 ## Library used
 
-- [GetX](https://pub.dev/packages/get) (For state, route and dependancy management)
+- [GetX](https://pub.dev/packages/get) (For state, route and dependency management)
